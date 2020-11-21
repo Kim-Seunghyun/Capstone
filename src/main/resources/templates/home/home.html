@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/header::userHead"></head>
+<body>
+<div th:replace="layout/top::header"></div>
+<div class="container">
+    <div class="row align-items-start">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+            <div class="sidebar-sticky">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <div style="padding-top:10px;" class="nav flex-column nav-pills" aria-orientation="vertical">
+                            <a th:href="@{/summaryService}" style="margin:5px;" class="nav-link text-primary">Summary Service</a>
+                            <a th:href="@{/myDirectory}" style="margin:5px;" class="nav-link text-primary">Directory</a>
+                            <a th:href="@{/adminPage}" style="margin:5px;" class="nav-link text-primary">Admin Page</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</div>
+<div th:replace="layout/footer::footer"></div>
+</body>
+</html>

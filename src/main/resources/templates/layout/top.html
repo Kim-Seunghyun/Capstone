@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<div th:fragment="header">
+    <nav class="navbar navbar-dark sticky-top bg-dark ">
+        <div class="container">
+            <a class="text-light" href="/"><h4>text summary service</h4></a>
+            <ul class="nav justify-content-end">
+                <li class="nav-item" sec:authorize="isAnonymous()"><a class="nav-link text-light" th:href="@{/login}">login</a></li>
+                <li class="nav-item" sec:authorize="isAnonymous()"><a class="nav-link text-light" th:href="@{/register}">register</a></li>
+                <li class="nav-item" sec:authorize="isAuthenticated()"><a class="nav-link text-light" th:href="@{/logout}">logout</a></li>
+                <li class="nav-item" sec:authorize="hasAuthority('ROLE_ADMIN')"><a class="nav-link text-light" th:href="@{/admin}">admin</a></li>
+                <li class="nav-item" ><a class="nav-link text-light" href="/">home</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+</html>
