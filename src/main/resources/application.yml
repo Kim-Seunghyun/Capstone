@@ -5,11 +5,15 @@ spring:
     username: CAP
     password: cap1234
   jpa:
-    open-in-view: false
-    generate-ddl: true
-    show-sql: true
+
     hibernate:
-      ddl-auto: none
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+        default_batch_fetch_size: 200
+      open-in-view: false
+
   security:
     user:
       name: user
