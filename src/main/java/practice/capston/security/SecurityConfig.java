@@ -62,11 +62,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new CustomFilterInvocationSecurityMetadataSource(urlResourcesMapFactoryBean().getObject());
     }
 
-
-    public SecurityResourceService securityResourceService() {
-        return new SecurityResourceService(resourceRepository);
-    }
-
     // DB를 통해서 인가정보를 가져오는 설
     @Bean
     public FilterSecurityInterceptor customFilterSecurityInterceptor() throws Exception {
@@ -76,6 +71,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         filterSecurityInterceptor.setAuthenticationManager(authenticationManagerBean());
         return filterSecurityInterceptor;
     }
+
+    public SecurityResourceService securityResourceService() {
+        return new SecurityResourceService(resourceRepository);
+    }
+
+
 
     // 인증을 확인하는 메소드
     @Override
@@ -103,17 +104,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return  customUrlResourcesMapFactoryBean;
     }
 
-
-
-
-
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(customAuthenticationProvider());
     }
 
     @Override
-    public void configure(WebSecurity web) throws Exception {
+    public void configure(WebSecurity web) {
         web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
 
@@ -121,11 +118,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/login" ,"/register").permitAll()
-                .antMatchers("/summary", "/summary**").hasRole("USER")
-                .antMatchers("/myDirectory", "/myDirectory**" ,"/myDirectory/**").hasRole("USER")
+                .antMatchers("/", "/login" ,"/register", "/upload").permitAll()
+                .antMatchers("/summaryService", "/upload**", "/myDirectory").hasRole("USER")
                 .antMatchers("/adminPage", "/adminPage**" ,"/adminPage/**").hasRole("ADMIN")
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()
 
                 .and()
                 .formLogin().loginPage("/login")
