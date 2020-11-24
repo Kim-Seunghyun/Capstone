@@ -27,4 +27,8 @@ public class TextContent {
         image.getTextContents().add(this);
     }
 
+    public void changeNewText(String text){
+        this.resultText = text;
+    }
+
 }

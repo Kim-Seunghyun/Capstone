@@ -30,12 +30,16 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="item : ${items}">
-                    <td th:text="${item.id}"></td>
-                    <td th:text="${item.name}"></td>
+                <tr th:each="image : ${images}">
+                    <td th:text="${image.getId()}"></td>
+                    <td th:text="${image.getTitle()}"></td>
                     <td>
-                        <a href="#" th:href="@{/items/{id}/edit (id=${item.id})}"
-                           class="btn btn-primary" role="button">content update</a>
+                        <a href="#" th:href="@{/myDirectory/showContents/{id}/imageContent (id=${image.getId()})}"
+                           class="btn btn-primary" role="button">show contents</a>
+                    </td>
+                    <td>
+                        <a href="#" th:href="@{/myDirectory/showContents/{id}/imageRemove (id=${image.getId()})}"
+                           class="btn btn-danger" role="button" style="width: 100px">image remove</a>
                     </td>
                 </tr>
                 </tbody>

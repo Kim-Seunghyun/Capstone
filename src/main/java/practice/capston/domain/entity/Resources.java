@@ -24,12 +24,12 @@ public class Resources {
 
     private String resourcePath;
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
+
+    private String role;
 
     protected Resources() { }
 
-    public Resources(String resourcePath, Role role) {
+    public Resources(String resourcePath, String role) {
         this.resourcePath = resourcePath;
         this.role = role;
     }

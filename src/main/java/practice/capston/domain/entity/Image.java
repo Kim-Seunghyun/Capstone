@@ -21,7 +21,7 @@ public class Image {
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "image")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "image", cascade = CascadeType.ALL)
     private List<TextContent> textContents = new ArrayList<>();
 
     protected Image() {}
@@ -29,7 +29,7 @@ public class Image {
     public Image(String title, Member member) {
         this.title = title;
         this.member = member;
-        this.path = "/home/ubuntu/바탕화면/CapstonProject/capston/src/main/resources/static/userimgs";
+        this.path = "/home/ubuntu/바탕화면/CapstonProject/capston/src/main/resources/static/user/";
         this.member.getImages().add(this);
     }
 }
