@@ -33,21 +33,19 @@ public class ImageServiceImpl implements ImageService {
             throw new IllegalStateException("ServiceImpl: 28");
         }
         Member findMember = memberByUsername.get();
+        Image image = new Image(title, findMember);
 
-        String imageTitle = findMember.getUsername() + " " +title;
-        Image image = new Image(imageTitle, findMember);
-
-        member.possibleToStore();
+        findMember.possibleToStore();
         Image save = imageRepository.save(image);
-        member.increaseImageCount();
+        findMember.increaseImageCount();
 
         return save;
     }
 
 
     @Override
-    public List<Image> findAllImages(String email) {
-        List<Image> imageList = imageRepository.findAllImageByEmail(email);
+    public List<Image> findAllImages(String username) {
+        List<Image> imageList = imageRepository.findAllImageByEmail(username);
         return imageList;
     }
 
@@ -59,5 +57,21 @@ public class ImageServiceImpl implements ImageService {
             throw new IllegalStateException("ServiceImpl: 50");
         }
         return imageByTitle.get();
+    }
+
+    @Override
+    @Transactional
+    public void deleteImage(Image image, Member member) {
+        imageRepository.delete(image);
+        member.decreaseImageCount();
+    }
+
+    @Override
+    public Image findImageById(Long id) {
+        Optional<Image> findImage = imageRepository.findImageById(id);
+        if(findImage.isEmpty()){
+            throw new IllegalStateException("ImageServiceImpl:74");
+        }
+        return findImage.get();
     }
 }

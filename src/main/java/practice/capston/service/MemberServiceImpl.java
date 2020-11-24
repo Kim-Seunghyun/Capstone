@@ -61,4 +61,11 @@ public class MemberServiceImpl implements MemberService {
         }
         return memberWithImage.get();
     }
+
+    @Override
+    @Transactional
+    public void deleteMember(String username) {
+        Optional<Member> memberByUsername = memberRepository.findMemberByUsername(username);
+        memberRepository.delete(memberByUsername.get());
+    }
 }

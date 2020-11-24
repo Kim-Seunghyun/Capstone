@@ -9,4 +9,5 @@ public interface MemberService {
     int upgradeUsage(String username);
     List<Member> findAllMembers();
     Member MemberWithImages(String username);
+    void deleteMember(String username);
 }
