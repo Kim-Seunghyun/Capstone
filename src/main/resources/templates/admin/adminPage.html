@@ -24,20 +24,25 @@
                 <thead>
                 <tr>
                     <th style="width: 150px;">user id</th>
-                    <th style="width: 250px;">now count</th>
-                    <th style="width: 250px;">max count</th>
-                    <th style="width: 150px;">more</th>
+                    <th style="width: 150px;">user email</th>
+                    <th style="width: 150px;">now count</th>
+                    <th style="width: 150px;">max count</th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="member : ${members}">
-                    <td th:text="${member.id}"></td>
                     <td th:text="${member.username}"></td>
-                    <td th:text="${member.address?.city}"></td>
+                    <td th:text="${member.email}"></td>
+                    <td th:text="${member.nowCount}"></td>
+                    <td th:text="${member.maxCount}"></td>
                     <td>
-                        <a href="#" th:href="@{/items/{id}/edit (id=${item.id})}"
+                        <a href="#" th:href="@{/admin/{username}/updateUsage (username=${member.username})}"
                            class="btn btn-primary" role="button">usage update</a>
+                    </td>
+                    <td>
+                        <a href="#" th:href="@{/admin/{username}/removeuser (username=${member.username})}"
+                           class="btn btn-danger" role="button" style="width: 150px">remove user</a>
                     </td>
                 </tr>
                 </tbody>

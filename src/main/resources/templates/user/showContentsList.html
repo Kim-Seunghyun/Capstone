@@ -10,7 +10,8 @@
                 <ul class="nav flex-column">
                     <li class="nav-item">
                         <div style="padding-top:10px;" class="nav flex-column nav-pills" aria-orientation="vertical">
-                            <a th:href="@{/summaryService}" style="margin:5px;" class="nav-link text-primary">Summary Service</a>
+                            <a th:href="@{/summaryService}" style="margin:5px;" class="nav-link text-primary">Summary
+                                Service</a>
                             <a th:href="@{/myDirectory}" style="margin:5px;" class="nav-link text-primary">Directory</a>
                             <a th:href="@{/adminPage}" style="margin:5px;" class="nav-link text-primary">Admin Page</a>
                         </div>
@@ -19,31 +20,32 @@
             </div>
         </nav>
 
-        <div>
-
+            <img th:src="@{/user/{title} (title=${image.getTitle()})}" width="700px" height="400px">
             <!--  이미지 사진이 들어갈 부분  -->
-
             <table class="table table-striped pull-right" style="width: 900px">
                 <thead>
                 <tr>
                     <th style="width: 100px;">number</th>
                     <th>content</th>
-                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="item : ${items}">
-                    <td th:text="${item.id}"></td>
-                    <td th:text="${item.content}"></td>
+                <tr th:each="textContent: ${textContents}">
+                    <td th:text="${textContent.getId()}" style="width: 50px"></td>
+                    <td th:text="${textContent.getResultText()}" style="width: 700px"></td>
                     <td>
-                        <a href="#" th:href="@{/items/{id}/edit (id=${item.id})}"
-                           class="btn btn-primary" role="button">content update</a>
+                        <a href="#" th:href="@{/myDirectory/updateContent/{id}/edit (id=${textContent.getId()})}"
+                           class="btn btn-primary" role="button" style="width: 100px">content update</a>
+                    </td>
+                    <td>
+                        <a href="#" th:href="@{/myDirectory/updateContent/{id}/remove (id=${textContent.getId()})}"
+                           class="btn btn-danger" role="button" style="width: 100px">content remove</a>
                     </td>
                 </tr>
                 </tbody>
             </table>
         </div>
-    </div>
+</div>
 </div>
 <div th:replace="layout/footer::footer"></div>
 </body>
