@@ -1,6 +1,7 @@
 package practice.capston.domain.entity;
 
 import lombok.Getter;
+import practice.capston.domain.dto.MemberLoginDto;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -27,13 +28,35 @@ public class Member {
     private int nowImageCount;
     private int maxImageCount;
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    private String role;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "member")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL)
     private List<Image> images = new ArrayList<>();
 
     protected Member () {    }
+
+
+
+    public Member(MemberLoginDto memberLoginDto){
+        this.username = memberLoginDto.getUsername();
+        this.email = memberLoginDto.getEmail();
+        this.password = memberLoginDto.getPassword();
+
+        this.maxImageCount = 30;
+        this.nowImageCount = 0;
+        this.role = "ROLE_USER";
+    }
+
+    public Member(String username, String password, String email, String role) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+
+        this.maxImageCount = 30;
+        this.nowImageCount = 0;
+        this.role = role;
+    }
 
     public Member(String username, String password, String email) {
         this.username = username;
@@ -42,7 +65,6 @@ public class Member {
 
         this.maxImageCount = 30;
         this.nowImageCount = 0;
-        this.role = Role.ROLE_USER;
     }
 
     public boolean possibleToStore() {
