@@ -26,6 +26,7 @@ public class TextContentServiceImpl implements TextContentService {
     }
 
     @Override
+    @Transactional
     public TextContent createTextContent(String result, Long imageId) {
         Optional<Image> imageById = imageRepository.findImageById(imageId);
 
@@ -38,4 +39,31 @@ public class TextContentServiceImpl implements TextContentService {
         TextContent save = textContentRepository.save(textContent);
         return save;
     }
+
+    @Transactional
+    @Override
+    public TextContent updateTextContent(Long id, String newValue) {
+        Optional<TextContent> textContent = textContentRepository.findById(id);
+        if(textContent.isEmpty()){
+            throw new IllegalStateException("TextContentServiceImpl: 47");
+        }
+        TextContent findTextContent = textContent.get();
+        findTextContent.changeNewText(newValue);
+        return findTextContent;
+    }
+
+    @Override
+    public TextContent findTextById(Long id) {
+        Optional<TextContent> textContent = textContentRepository.findById(id);
+        return textContent.get();
+    }
+
+    @Override
+    @Transactional
+    public TextContent removeTextById(Long id) {
+        Optional<TextContent> textContent = textContentRepository.findById(id);
+        textContentRepository.delete(textContent.get());
+        return null;
+    }
+
 }
