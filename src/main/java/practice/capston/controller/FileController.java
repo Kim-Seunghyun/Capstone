@@ -1,5 +1,7 @@
 package practice.capston.controller;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -7,10 +9,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import practice.capston.domain.dto.KafkaDto;
 import practice.capston.domain.entity.Image;
 import practice.capston.domain.entity.Member;
 import practice.capston.domain.entity.TextContent;
-import practice.capston.repository.TextContentRepository;
+import practice.capston.kafkaconfig.ProduceMessage;
 import practice.capston.service.ImageService;
 import practice.capston.service.TextContentService;
 
@@ -25,6 +28,7 @@ public class FileController {
 
     private final ImageService imageService;
     private final TextContentService textContentService;
+    private final ProduceMessage produceMessage;
 
     @GetMapping("/summaryService")
     public String summaryService(@AuthenticationPrincipal Member member) {
@@ -63,10 +67,21 @@ public class FileController {
             throw new FileNotFoundException("FileController: 59");
         } finally {
             // 카프카 메세지에 이미지 DTO를 던지는 부분.
-            textContentService.createTextContent("result test", saveImage.getId());
+            TextContent text = textContentService.createTextContent("result test", saveImage.getId());
+            KafkaDto kafkaDto = new KafkaDto(saveImage, text);
+            produceMessage.sendMessage(kafkaDto);
         }
 
 
         return "redirect:/";
     }
+
+    @Data
+    @AllArgsConstructor
+    static class Result<T> {
+        private T data;
+    }
+
+
+
 }
