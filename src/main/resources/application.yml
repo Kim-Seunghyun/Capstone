@@ -14,12 +14,13 @@ spring:
         default_batch_fetch_size: 200
       open-in-view: false
 
-  security:
-    user:
-      name: user
-      password: 1111
-
 logging:
   level:
     org.hibernate.SQL: debug
     #org.hibernate.type: trace
+
+kafka:
+  my:
+    bootstrapAddress: localhost:9092
+    topicName: ygSonggoon
+    groupId: summaryApp
